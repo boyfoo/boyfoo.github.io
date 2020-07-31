@@ -1,0 +1,14 @@
+<footer class="g-footer">
+  <section>Copyright © 
+  {% assign current = "now" | date: "%Y" | plus: 0%}
+  {% unless site.footer.since and site.footer.since == current %}
+    {{ site.footer.since }}
+    -
+  {% endunless %}
+  {{ current }}
+  {{ site.title }}
+  
+  闽ICP备17013708号
+    
+  </section>
+</footer>
