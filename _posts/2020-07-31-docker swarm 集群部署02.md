@@ -114,3 +114,21 @@ docker service ls
 这个映射是针对整个集群 集群中任意节点访问8080端口都会代理到服务web_server中，就算这个节点没有运行该服务的副本 
 
 #### server 之间通信
+
+```bash
+# 创建一个overlay网络
+docker network create --driver overlay docker-overlay-test
+
+# 创建httpd
+docker service create --name web_server --replicas 3 --network docker-overlay-test httpd
+
+# 场景一个工具容器 因为该容器会自动退出 所有加上休眠时间防止退出
+docker service create --name util --network docker-overlay-test busybox sleep 10000000
+
+# util所在节点上 ping web_server 或者 web_server.1.xxxxxx  
+docker exec util.1.lymny8ret6yapqm39xddlklvg ping web_server
+```
+
+只要服务是在同一个创建的overlay上 就可以用服务名称 或者副本名称 ping 通
+
+不能用自带默认的overlay 会失败 必须创建一个新的overlay网络
