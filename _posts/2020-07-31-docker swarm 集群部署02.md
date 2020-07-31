@@ -85,3 +85,32 @@ docker service rm web_server
 
 #### 外部访问 server
 
+查看服务的网卡ip
+
+```bash
+# 后面跟着容器的名称
+docker inspect web_server.3.99rrplk9uxtt3zf0ada3mgwwd | grep IPAddress
+```
+
+返回的ip为本地docker0网卡的桥接地址 只能在宿主机上访问
+
+要提供外网访问 需要端口映射
+
+```bash
+docker service update --publish-add 8080:80 web_server
+```
+
+把节点8080端口映射到web_server服务中
+
+```bash
+# 可以看到服务后面多少端口映射信息
+docker service ls
+```
+
+集群会把该服务旧的副本关闭 并从新创建新的副本并映射对应的接口
+
+所有节点都会把8080的端口映射到web_server服务80中
+
+这个映射是针对整个集群 集群中任意节点访问8080端口都会代理到服务web_server中，就算这个节点没有运行该服务的副本 
+
+#### server 之间通信
