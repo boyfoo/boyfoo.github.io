@@ -131,4 +131,5 @@ docker exec util.1.lymny8ret6yapqm39xddlklvg ping web_server
 
 只要服务是在同一个创建的overlay上 就可以用服务名称 或者副本名称 ping 通
 
-不能用自带默认的overlay 会失败 必须创建一个新的overlay网络
+不能用自带默认的overlay会失败，自带的名称为ingress网卡无法支持服务发现协议， 必须创建一个新的overlay网络
+
