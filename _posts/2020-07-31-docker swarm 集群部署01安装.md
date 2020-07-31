@@ -1,10 +1,12 @@
 ---
 layout: post
-title: 'docker swarm 集群部署01'
+title: 'docker swarm 集群部署01安装'
 date: 2020-07-31
 author: boyfoo
 tags: docker swarm
 ---
+
+#### 宿主机配置
 
 登录各自机器，修改三台主机名称(此处名称只为操作方便 与hosts的名称无因果关系):
 ```bash
@@ -24,6 +26,7 @@ sudo vim /etc/hosts
 192.168.10.30 node3
 ```
 
+#### 创建集群
 
 ```bash
 # node1
@@ -48,7 +51,9 @@ docker swarm join-token manager
 ```
 
 
-#### 将node1 node3设置为管理节点 node2 为工作节点
+#### 查看 docker swarm 集群信息
+
+将node1 node3设置为管理节点 node2 为工作节点
 
 查看信息
 
@@ -99,7 +104,7 @@ docker node demote node3
 docker network create --driver overlay docker-swarm-test
 ```
 
-一个简单的docker swarm界面
+#### 一个简单的docker swarm 图形化界面
 
 ```
 docker run -itd -p 8888:8080 -e HOST=192.168.10.10 -e PORT=8080 -v /var/run/docker.sock:/var/run/docker.sock --name visualizer dockersamples/visualizer
