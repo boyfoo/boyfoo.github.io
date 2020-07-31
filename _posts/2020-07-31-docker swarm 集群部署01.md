@@ -94,4 +94,13 @@ docker node promote node2
 docker node demote node3
 ```
 
+创建网络
+```
+docker network create --driver overlay docker-swarm-test
+```
 
+一个简单的docker swarm界面
+
+```
+docker run -itd -p 8888:8080 -e HOST=192.168.10.10 -e PORT=8080 -v /var/run/docker.sock:/var/run/docker.sock --name visualizer dockersamples/visualizer
+```
