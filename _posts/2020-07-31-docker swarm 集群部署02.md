@@ -134,5 +134,36 @@ docker exec util.1.lymny8ret6yapqm39xddlklvg ping web_server
 不能用自带默认的overlay会失败，自带的名称为ingress网卡无法支持服务发现协议， 必须创建一个新的overlay网络
 
 
+#### global 与 replicas 模式区别
+
+global 模式运行服务
+
+```bash
+docker service create --mode global --name web_server4 -p 8080:80 httpd
+```
+
+1. global 每个节点只会启动一个副本, replicas指定希望服务数量自动分配
+2. 节点退出了 global 副本会减少，而 replicas 会在其他节点上补全
+3. 新的节点重新加入 global 会自己补全数量 replicas 不变
 
 
+#### 更新服务
+
+替换服务 docker 镜像
+
+```bash
+docker service update --image xxxx [服务名称]
+```
+
+更新为6个副本 每次并行更新2个 每次间隔延迟1分30秒
+
+```bash
+docker service update --replicas 6 --update-parallelism 2 --update-delay 1m30s [服务名称]
+```
+
+
+回滚到上一次
+
+```bash
+docker service update --rollback [服务名称]
+```
