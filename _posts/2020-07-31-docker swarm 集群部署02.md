@@ -157,7 +157,10 @@ docker service update --image xxxx [服务名称]
 
 更新为6个副本 每次并行更新2个 每次间隔延迟1分30秒
 
+
+
 ```bash
+# 本次只会将副本设置为6个 并且设置好更新参数 下次 update --image 时 设置的并行更新 和延迟时间才会生效
 docker service update --replicas 6 --update-parallelism 2 --update-delay 1m30s [服务名称]
 ```
 
@@ -166,4 +169,36 @@ docker service update --replicas 6 --update-parallelism 2 --update-delay 1m30s [
 
 ```bash
 docker service update --rollback [服务名称]
+```
+
+
+#### 节点标签
+
+给node 1和3 节点添加一个名为env 值为prod的标签
+
+```bash
+docker node update --label-add env=prod node1
+docker node update --label-add env=prod node3
+docker node update --label-add env=test node2
+```
+查看节点信息
+
+```bash
+docker node inspect node3 --pretty
+```
+
+运行服务 两个副本 只在标签 env 为 test 的节点
+
+```bash
+docker service create --constraint node.labels.env==test --replicas 2 --name my_web --publish 8080:80 httpd
+```
+
+迁移至 prod 标签下
+
+```bash 
+# 删除服务允许节点标签 test 此时容器为重启
+docker service update --constraint-rm node.labels.env==test my_web
+
+# 新增服务允许节点 会产生迁移
+docker service update --constraint-add node.labels.env==prod my_web
 ```
