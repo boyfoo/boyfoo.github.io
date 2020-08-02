@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '2020-08-02-Dockerfile COM与ENTRYPOINT'
+title: '2020-08-02-Dockerfile CMD与ENTRYPOINT'
 date: 2020-08-02
 author: boyfoo
 tags: docker
@@ -13,9 +13,11 @@ CMD 适用于docker run 时，没有指定运行的命令而**默认**执行的�
 
 #### CMD 三种格式 
 
-1. CMD <command> 
-2. CMD ["<executable>", "<param1>", "<param2>"]
-3. CMD ["<param1>", "<param2>"]
+```bash
+CMD <command> 
+CMD ["<executable>", "<param1>", "<param2>"]
+CMD ["<param1>", "<param2>"]
+```
 
 **第1种**是以 `/bin/sh -c` 的形式来运行`<command>`内容，意味着`<command>`对应的进程的pid不为1，是做为`/bin/sh`的子进程运行，当使用`docker stop <container> ` 命令停止时，`<command>`进程接受不到系统发送来的 `SIGTERM` 等信号
 
