@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '2020-08-02-Dockerfile CMD与ENTRYPOINT'
+title: 'Dockerfile CMD与ENTRYPOINT'
 date: 2020-08-02
 author: boyfoo
 tags: docker
