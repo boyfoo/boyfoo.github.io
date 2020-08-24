@@ -1,1 +1,1 @@
-docker run --volume=$(pwd)/srv/jekyll -p 4000:4000 --name blog --rm -it jekyll/jekyll jekyll serve
+docker run --rm -v "$(pwd):/src" -p 4000:4000 grahamc/jekyll serve -H 0.0.0.0
