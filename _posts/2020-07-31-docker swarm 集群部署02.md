@@ -40,7 +40,7 @@ docker service ps  web_server
 
 副本伸缩
 
-```
+```bash
 # 将web_server服务 副本选择为5个
 docker service scale web_server=5
 
@@ -68,7 +68,7 @@ docker service ps web_server
 ```
 
 
-```
+```bash
 # 从新激活 加入集群编排
 docker node update --availability active node1
 ```
