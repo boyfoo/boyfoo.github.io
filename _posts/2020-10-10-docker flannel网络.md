@@ -64,3 +64,9 @@ $ sudo systemctl start flanneld.service
 # 查看是否允许成功
 ps -ef | grep flan
 ```
+
+
+
+### docker 启动设置
+
+...
