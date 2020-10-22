@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Kubeadm部署k8s'
+title: 'Ubuntu Kubeadm 部署 k8s'
 date: 2020-10-21
 author: boyfoo
 tags: k8s

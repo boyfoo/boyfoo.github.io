@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Rancher2部署k8s'
+title: 'Ubuntu Rancher2 部署 k8s'
 date: 2020-10-21
 author: boyfoo
 tags: k8s
@@ -50,7 +50,3 @@ $ sudo docker run -d -p 8080:80 -p 8443:443 -v /home/vagrant/rancher/:/var/lib/r
 
 此时集群状态显示 `Provisioning`，若显示`ETCD`相关失败原因可以删除集群，重新创建一个
 
-
-#### 设置项目与空间
-
-先创建项目 在创建命名空间
