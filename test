@@ -1,14 +1,19 @@
-KUBE_CONTROLLER_MANAGER_OPTS="--logtostderr=false \
---v=2 \
---log-dir=/opt/kubernetes/logs \
---leader-elect=true \
---master=127.0.0.1:8080 \
---address=127.0.0.1 \
---allocate-node-cidrs=true \
---cluster-cidr=10.244.0.0/16 \
---service-cluster-ip-range=10.0.0.0/24 \
---cluster-signing-cert-file=/opt/cfssl_file/k8s/ca.pem \
---cluster-signing-key-file=/opt/cfssl_file/k8s/ca-key.pem  \
---root-ca-file=/opt/cfssl_file/k8s/ca.pem \
---service-account-private-key-file=/opt/cfssl_file/k8s/ca-key.pem \
---experimental-cluster-signing-duration=87600h0m0s"
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /opt/cfssl_file/k8s/ca.pem
+    server: https://192.168.205.120:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kube-proxy
+  name: default
+current-context: default
+kind: Config
+preferences: {}
+users:
+- name: kube-proxy
+  user:
+    client-certificate: /opt/cfssl_file/k8s/kube-proxy.pem
+    client-key: /opt/cfssl_file/k8s/kube-proxy-key.pem
