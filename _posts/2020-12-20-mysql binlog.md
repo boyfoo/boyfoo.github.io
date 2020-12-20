@@ -256,3 +256,43 @@ mysqlbinlog --skip-gtids --include-gtids='71fe8ba8-3940-11eb-ac7e-0242ac1a0002:2
 ```
 
 `--skip-gtids` 作用，因为`gtid`自带幂等性检查，就是已经执行过的`gtid`再执行时不会执行会直接跳过，主要用于主从复制的时候防止反复执行，但在恢复的时候需要执行之前的，加上`--skip-gtids`在执行的时候不会去检查`gtid`幂等性，直接生成新的`gtid`再执行
+
+
+##### 日志清理
+
+什么情况会刷一个新的日志文件：
+1. 执行`mysql> flush logs;`
+2. 重启`mysql`
+3. 日志达到配置大小(默认1G)`mysql> select @@max_binlog_size;`
+
+保留`binlog` 时长为两轮全备周期+1，防止最近一次全备失败了，如全备份周期为一周，那就是15天之前的`binlog`已经过期了
+
+`mysql`可以配置过期时间
+
+```mysql
+# 0表示永不过期
+mysql> show variables like '%expire_log%';
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| expire_logs_days | 0     |
++------------------+-------+
+
+# 设置
+mysql> set global expire_logs_days=15;
+
+# 配置文件
+expire_logs_days=15
+```
+
+手动删除：
+
+```mysql
+# 删除2天前的
+mysql> purge binary logs before now() - INTERVAL 2 day;
+# 删除到mysql-bin-log.000003之前的
+mysql> purge binary logs to 'mysql-bin-log.000003';
+
+# 全部删除 从000001开始重新记 非常危险 主从环境禁止使用
+mysql> reset master;
+```
