@@ -121,3 +121,27 @@ $ helm install my-release ingress-nginx
 # 更新
 $ helm upgrade my-release ingress-nginx 
 ```
+
+
+### 部署负载均衡
+
+```yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: mytest-lb		# 自定义负载的名称
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"	# 当前Ingress为nginx
+spec:
+  rules:
+  - host: golib.boyfoo.top 		# 自定义域名
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mywebgin		# 代理至服务名称为 mywebgin 的服务
+          servicePort: http 		# 代理至http请求的端口
+```
+
+
