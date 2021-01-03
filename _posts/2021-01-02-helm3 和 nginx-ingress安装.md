@@ -46,7 +46,7 @@ $ helm list
 $ helm uninstall mydb-mysql
 ```
 
-#### 自定义服务
+### 自定义服务
 
 ```bash
 # 在当前目录创建一个叫mygin的项目
