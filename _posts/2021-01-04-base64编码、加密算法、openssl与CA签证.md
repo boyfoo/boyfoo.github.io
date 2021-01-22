@@ -1,10 +1,27 @@
 ---
 layout: post
-title: '加密算法和openssl与CA签证'
+title: 'base64编码、加密算法、openssl与CA签证'
 date: 2021-01-04
 author: boyfoo
 tags: 其他
 ---
+
+#### BASE64
+
+
+普通 `base64` : 将字符串或二进制编码成 `0-9a-zA-Z+/` 这64个字符组成的字符串，并且结果长度是3的倍数，长度不足使用 `=` 补齐
+
+`base64.StdEncoding`
+
+`base64url`: 在url中 `+/` 是特殊字符，所以在普通 `base64` 的基础上将 `+/` 替换成 `-_`
+
+`base64.URLEncoding`
+
+非对齐 `base64`: 编码结果不是3的倍数的情况下不使用 `=` 号补齐，本来多长就多长 
+
+`base64.RawStdEncoding` 和 `base64.RawURLEncoding` 分别对应普通 `base64` 和 `base64url`
+
+
 #### HASH算法 (不可逆)
 
 `MD5` `SHA1` `SHA256` 等都算是`HASH`算法
